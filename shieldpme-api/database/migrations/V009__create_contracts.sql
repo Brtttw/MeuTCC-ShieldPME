@@ -1,0 +1,4 @@
+CREATE TABLE contracts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    
+);
