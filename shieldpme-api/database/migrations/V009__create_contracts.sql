@@ -1,4 +1,12 @@
 CREATE TABLE contracts (
     id INT AUTO_INCREMENT PRIMARY KEY,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	ON UPDATE TIMESTAMP,
     
+      
+
+     
+       
 );
