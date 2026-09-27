@@ -4,8 +4,6 @@ CREATE TABLE contracts (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	ON UPDATE TIMESTAMP,
-    
-      
 
      
        
