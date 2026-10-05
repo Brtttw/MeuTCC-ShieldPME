@@ -1,0 +1,277 @@
+/* ============================================================
+   SECTIONS DE CHECKOUT (PLUS / PRO / ULTRA)
+   ============================================================ */
+.checkout-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* Era min-height no site original: a página fixa não rolava e o conteúdo abaixo da tela ficava inacessível */
+  height: 100vh;
+  background: #000;
+  z-index: 5;
+  overflow-y: auto;
+  padding: 120px 10% 80px;
+}
+
+.checkout-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.checkout-header {
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.checkout-header h1 {
+  font-size: 42px;
+  margin-bottom: 15px;
+  background: linear-gradient(90deg, #ffffff, #c0c0c0, #a1a1a1);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradient 4s linear infinite;
+}
+
+.checkout-header p {
+  color: #a7a7a7;
+  font-size: 18px;
+}
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 50px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Resumo do Plano */
+.checkout-summary {
+  background: rgba(65, 65, 65, 0.164);
+  padding: 35px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  border-image: linear-gradient(45deg, #cfcfcf, #6b6b6b, #474747) 1;
+  position: sticky;
+  top: 100px;
+}
+
+.checkout-summary h2 {
+  font-size: 28px;
+  background: linear-gradient(90deg, #ffffff, #c0c0c0);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.checkout-summary .plan-price {
+  font-size: 36px;
+  font-weight: bold;
+  color: #ffffff;
+  margin: 15px 0;
+}
+
+.checkout-summary .plan-price span {
+  font-size: 16px;
+  color: #a7a7a7;
+  font-weight: normal;
+}
+
+.checkout-summary ul {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.checkout-summary ul li {
+  color: #b0b0b0;
+  font-size: 16px;
+  margin-bottom: 12px;
+  padding-left: 25px;
+  position: relative;
+}
+
+.checkout-summary ul li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* Formulário de Checkout */
+.checkout-form-wrapper h2 {
+  font-size: 24px;
+  background: linear-gradient(90deg, #d0d0d0, #a0a0a0);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.checkout-form .input-group {
+  position: relative;
+}
+
+.checkout-form .input-group input,
+.checkout-form .input-group select {
+  width: 100%;
+  padding: 15px;
+  background: #111;
+  border: 1px solid #444;
+  color: #fff;
+  outline: none;
+  transition: 0.3s;
+  font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.checkout-form .input-group input:focus,
+.checkout-form .input-group select:focus {
+  border-color: #999;
+}
+
+.checkout-form .input-group select {
+  cursor: pointer;
+  appearance: none;
+}
+
+.checkout-form .input-group select option {
+  background: #111;
+  color: #fff;
+}
+
+/* Métodos de Pagamento */
+.payment-methods {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 10px 0;
+}
+
+.payment-method {
+  padding: 14px;
+  background: rgba(65, 65, 65, 0.10);
+  border: 1px solid #444;
+  color: #aaa;
+  cursor: pointer;
+  transition: 0.3s;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+.payment-method:hover {
+  border-color: #888;
+  color: #fff;
+}
+
+.payment-method.active {
+  background: rgba(65, 65, 65, 0.30);
+  border-color: #c0c0c0;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Campos de Pagamento Dinâmicos */
+.payment-fields {
+  margin-top: 10px;
+}
+
+.payment-fields .field-group {
+  display: none;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.payment-fields .field-group.active {
+  display: flex;
+}
+
+.payment-fields .field-group p {
+  color: #a7a7a7;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* QR Code PIX */
+.pix-qr {
+  width: 180px;
+  height: 180px;
+  margin: 15px auto;
+  display: block;
+  border-radius: 10px;
+  background: #fff;
+  padding: 10px;
+}
+
+.pix-chave {
+  background: #111;
+  border: 1px solid #444;
+  padding: 12px;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 13px;
+  color: #ccc;
+  word-break: break-all;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.pix-chave:hover {
+  border-color: #888;
+}
+
+/* Botão Confirmar */
+.checkout-btn {
+  width: 100%;
+  padding: 18px;
+  margin-top: 15px;
+  border: 2px solid transparent;
+  border-image: linear-gradient(45deg, #696969, #252525, #202020) 1;
+  background: none;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.checkout-btn:hover {
+  background: linear-gradient(90deg, #3a3a3a, #444444, #9c9c9c, #616161, #525252);
+  background-size: 200% auto;
+  color: rgb(29, 29, 29);
+  animation: buttonGradient 3s linear infinite;
+}
+
+/* Grid para campos lado a lado */
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+@media (max-width: 600px) {
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+  .payment-methods {
+    grid-template-columns: 1fr;
+  }
+}

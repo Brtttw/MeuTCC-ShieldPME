@@ -1,0 +1,129 @@
+/* Cookies */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(13, 13, 13, 0.95);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  z-index: 99999;
+  padding: 20px 30px;
+  transform: translateY(100%);
+  transition: transform 0.5s ease;
+}
+
+.cookie-banner.show {
+  transform: translateY(0);
+}
+
+.cookie-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.cookie-text {
+  max-width: 70%;
+}
+
+.cookie-text strong {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.cookie-text p {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.cookie-text a {
+  color: #ff8c32;
+  text-decoration: none;
+}
+
+.cookie-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.cookie-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 100000;
+}
+
+.cookie-modal--aberto {
+  display: flex;
+}
+
+.cookie-modal-content {
+  background: #111;
+  padding: 30px;
+  width: 400px;
+  border-radius: 10px;
+  color: white;
+}
+
+.cookie-option {
+  margin: 20px 0;
+}
+
+.cookie-option p {
+  font-size: 13px;
+  color: #aaa;
+}
+
+.cookie-buttons {
+  margin-top: 20px;
+}
+
+.cookie-buttons button {
+  width: 100%;
+  padding: 12px;
+  background: #ff8c32;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* Botões */
+.btn-outline {
+  background: transparent;
+  border: 1px solid #555;
+  color: #fff;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.btn-reject {
+  background: #222;
+  border: none;
+  color: #fff;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.btn-accept {
+  background: #ff8c32;
+  border: none;
+  color: #fff;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.btn-accept:hover {
+  background: #ff7a1a;
+}

@@ -1,0 +1,366 @@
+/* ----- Layout Base das Novas Pages ----- */
+.new-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* Era min-height no site original: a página fixa não rolava e o conteúdo abaixo da tela ficava inacessível */
+  height: 100vh;
+  background: #000;
+  z-index: 5;
+  overflow-y: auto;
+  padding: 120px 10% 80px;
+}
+
+.new-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.new-page-header {
+  margin-bottom: 60px;
+}
+
+.new-page-header h1 {
+  font-size: 42px;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #ffffff, #c0c0c0, #a1a1a1);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradient 4s linear infinite;
+}
+
+.new-page-header > p {
+  color: #a7a7a7;
+  font-size: 18px;
+  max-width: 900px;
+  line-height: 1.8;
+}
+
+/* ----- Seção de Conteúdo Texto (sem cards) ----- */
+.content-section {
+  margin-bottom: 50px;
+}
+
+.content-section h2 {
+  font-size: 28px;
+  background: linear-gradient(90deg, #d0d0d0, #a0a0a0);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.content-section h3 {
+  font-size: 22px;
+  color: #e2e2e2;
+  margin-bottom: 15px;
+  margin-top: 30px;
+  font-weight: 600;
+}
+
+.content-section p {
+  color: #b0b0b0;
+  font-size: 17px;
+  line-height: 1.9;
+  margin-bottom: 18px;
+}
+
+.content-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.content-section ul li {
+  color: #b0b0b0;
+  font-size: 17px;
+  line-height: 1.9;
+  margin-bottom: 12px;
+  padding-left: 28px;
+  position: relative;
+}
+
+.content-section ul li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* ----- Blog (com cards de notícias) ----- */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 35px;
+  margin-top: 40px;
+}
+
+.blog-card {
+  background: rgba(65, 65, 65, 0.164);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-image: linear-gradient(45deg, #cfcfcf, #6b6b6b, #474747) 1;
+  transition: 0.4s;
+  position: relative;
+}
+
+.blog-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.05), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.blog-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  background: rgba(65, 65, 65, 0.25);
+}
+
+.blog-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  transition: 0.4s;
+}
+
+.blog-card:hover img {
+  transform: scale(1.08);
+  filter: brightness(1.1);
+}
+
+.blog-card-content {
+  padding: 25px;
+  position: relative;
+  z-index: 2;
+}
+
+.blog-card-content .date {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.blog-card-content h3 {
+  font-size: 22px;
+  color: #ffffff;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.blog-card-content p {
+  color: #a7a7a7;
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ----- Contato Formulário ----- */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contact-form-wrapper h2 {
+  font-size: 28px;
+  background: linear-gradient(90deg, #d0d0d0, #a0a0a0);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-form .input-group {
+  position: relative;
+}
+
+.contact-form .input-group input,
+.contact-form .input-group textarea {
+  width: 100%;
+  padding: 16px;
+  background: #111;
+  border: 1px solid #444;
+  color: #fff;
+  outline: none;
+  transition: 0.3s;
+  font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.contact-form .input-group input:focus,
+.contact-form .input-group textarea:focus {
+  border-color: #999;
+}
+
+.contact-form .input-group textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.contact-form button {
+  width: 100%;
+  padding: 18px;
+  border: 1px solid #fff;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.contact-form button:hover {
+  background: #fff;
+  color: #000;
+}
+
+.contact-info h2 {
+  font-size: 28px;
+  background: linear-gradient(90deg, #d0d0d0, #a0a0a0);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+.contact-info-item {
+  margin-bottom: 30px;
+}
+
+.contact-info-item h4 {
+  font-size: 18px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-info-item h4 i {
+  color: #c0c0c0;
+  font-size: 18px;
+}
+
+.contact-info-item p {
+  color: #a7a7a7;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ----- Ferramentas & Minha Conta ----- */
+.tools-list {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.tool-item {
+  padding-bottom: 35px;
+  border-bottom: 1px solid rgba(65, 65, 65, 0.4);
+}
+
+.tool-item:last-child {
+  border-bottom: none;
+}
+
+.tool-item h3 {
+  font-size: 24px;
+  color: #ffffff;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.tool-item p {
+  color: #b0b0b0;
+  font-size: 17px;
+  line-height: 1.9;
+  margin-bottom: 15px;
+}
+
+.tool-item ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tool-item ul li {
+  color: #b0b0b0;
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 10px;
+  padding-left: 25px;
+  position: relative;
+}
+
+.tool-item ul li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* ----- Minha Conta Destaques ----- */
+.account-highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.account-highlight {
+  padding: 30px;
+  background: rgba(65, 65, 65, 0.10);
+  border-left: 3px solid #c0c0c0;
+  transition: 0.3s;
+}
+
+.account-highlight:hover {
+  background: rgba(65, 65, 65, 0.20);
+  transform: translateX(8px);
+}
+
+.account-highlight h4 {
+  font-size: 20px;
+  color: #ffffff;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.account-highlight p {
+  color: #a7a7a7;
+  font-size: 16px;
+  line-height: 1.7;
+  margin: 0;
+}

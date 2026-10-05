@@ -1,0 +1,135 @@
+/* Navbar */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 10%;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  backdrop-filter: blur(10px);
+  background: rgba(65, 65, 65, 0.164);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  transition: 0.4s ease, padding 0.4s ease, left 0.4s ease, right 0.4s ease, width 0.4s ease;
+  z-index: 10;
+}
+
+nav.scrolled {
+  padding: 12px 5%;
+  left: 25%;
+  right: 25%;
+  width: 50%;
+  border-radius: 40px;
+  background: rgba(65, 65, 65, 0.164);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+}
+
+nav.scrolled ul {
+  gap: 20px;
+}
+
+nav.scrolled button {
+  margin-left: 30px;
+  margin-top: -5px;
+  background-image: url('/imagens/login.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: transparent;
+  padding: 6px 6px;
+  border: none;
+  transition: all 0.4s ease;
+  text-decoration: none;
+}
+
+nav.scrolled button:hover {
+  background-image: url('/imagens/login-hover.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: transparent;
+  border: none;
+  animation: none;
+  transition: initial;
+  transition-duration: initial;
+  margin-left: 30px;
+  margin-top: -5px;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 28px;
+  transition: margin 0.4s ease, gap 0.4s ease;
+}
+
+/* Logo do Site */
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  background: linear-gradient(90deg,#ffffff,#c0c0c0,#a1a1a1);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradient 4s linear infinite;
+  cursor: default;
+}
+
+nav button {
+  padding: 10px 20px;
+  border: 2px solid transparent;
+  border-image: linear-gradient(45deg, #696969, #252525, #202020) 1;
+  background: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.4s ease;
+  position: fixed;
+  margin-top: -11.5px;
+  margin-left: 60px;
+}
+
+nav button:hover {
+  background: linear-gradient(90deg, #3a3a3a, #444444, #9c9c9c, #616161, #525252);
+  background-size: 200% auto;
+  color: rgb(29, 29, 29);
+  animation: buttonGradient 3s linear infinite;
+  margin-left: 60px;
+}
+
+nav a {
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+  position: relative;
+  color: #ffffff;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  animation: navGradient 2s linear infinite;
+  transform: scale(1.15);
+  background: linear-gradient(90deg, #747474, #a1a1a1, #afafaf, #999999);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+nav a.active {
+  color: #666;
+  background: none;
+  -webkit-background-clip: initial;
+}
+
+@keyframes navGradient {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 200%;
+  }
+}

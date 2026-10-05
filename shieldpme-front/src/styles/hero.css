@@ -1,0 +1,32 @@
+/* Tela Inicial */
+.home {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+  cursor: default;
+}
+
+.home h1 {
+  font-size: 70px;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #ffffff, #c0c0c0, #a1a1a1);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-left: 200px;
+  position: absolute;
+  font-weight: 700;
+}
+
+.home p {
+  color: #979797;
+  font-size: 14px;
+  max-width: 650px;
+  opacity: 0.8;
+  margin-left: 200px;
+  position: absolute;
+  margin-top: 250px;
+}

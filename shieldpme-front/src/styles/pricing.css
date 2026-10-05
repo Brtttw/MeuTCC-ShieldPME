@@ -1,0 +1,196 @@
+/* Central dos Planos */
+.pricing {
+  padding: 100px 10%;
+  cursor: default;
+}
+
+.pricing-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+  gap: 47px;
+  margin-top: 0px;
+}
+
+/* Descrição da Central dos Planos */
+.text-pricing {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.text-pricing p {
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+  color: #a7a7a7;
+  font-size: 20px;
+  text-align: left;
+  margin-top: -40px;
+  margin-bottom: 30px;
+}
+
+.text-pricing h2 {
+  font-size: 42px;
+  color: #ffffff;
+  margin-bottom: 30px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #ffffff, #c0c0c0, #a1a1a1);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradient 4s linear infinite;
+  margin-bottom: 70px;
+  margin-left: 116px;
+  text-align: left;
+}
+
+/* Planos */
+.plan {
+  background: rgba(65, 65, 65, 0.164);
+  padding: 40px;
+  transition: 0.4s;
+  position: relative;
+  border: 2px solid transparent;
+  border-image: linear-gradient(45deg, #cfcfcf, #6b6b6b, #474747) 1;
+  text-align: center;
+  overflow: hidden;
+}
+
+.plan::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.05), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.plan:hover {
+  transform: translateY(-15px) scale(1.05);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  background: rgba(65, 65, 65, 0.25);
+}
+
+.plan h3 {
+  color: #ffffff;
+  font-size: 28px;
+  margin-bottom: 10px;
+  transition: 0.3s;
+  text-align: left;
+}
+
+.plan:hover h3 {
+  font-size: 1.8em;
+}
+
+.plan ul {
+  list-style: none;
+  margin: 25px -50px;
+  opacity: 0.9;
+  text-align: left;
+  width: fit-content;
+}
+
+/* Preço dos planos */
+.price {
+  font-size: 38px;
+  margin: 20px 0;
+  background: linear-gradient(90deg, #505050, #3f3f3f, #292929, #242424, #141414);
+  border: 2px solid transparent;
+  border-image: linear-gradient(45deg, #8a8a8a, #6e6e6e, #4e4e4e) 1;
+  padding: 10px 10px;
+}
+
+/* Benefícios dos Planos */
+.plan ul {
+  background: linear-gradient(90deg, #505050, #3f3f3f, #292929, #242424, #141414);
+  margin-left: 2px;
+  border: 2px solid transparent;
+  border-image: linear-gradient(45deg, #8a8a8a, #6e6e6e, #4e4e4e) 1;
+}
+
+.plan ul li {
+  margin: 25px 0;
+  color: #e2e2e2;
+}
+
+.plan .garanta {
+  font-size: 16px;
+  text-align: left;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+/* Botão de Escolher Plano */
+.plan button {
+  padding: 20px 80px;
+  border: 2px solid transparent;
+  border-image: linear-gradient(45deg, #696969, #252525, #202020) 1;
+  background: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.3s;
+  font-size: 20px;
+}
+
+@keyframes buttonGradient {
+  0% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
+}
+
+.plan button:hover {
+  background: linear-gradient(90deg, #3a3a3a, #444444, #9c9c9c, #616161, #525252);
+  background-size: 200% auto;
+  color: rgb(29, 29, 29);
+  animation: buttonGradient 3s linear infinite;
+  transform: translateY(+2px) scale(1.15);
+}
+
+/* Mais Popular */
+.featured {
+  border: 2px solid transparent;
+  border-image: linear-gradient(45deg, #ffffff, #c0c0c0, #a1a1a1) 1;
+  transform: scale(1.08);
+  background: rgba(65, 65, 65, 0.25);
+  box-shadow: 0 15px 50px rgba(192, 192, 192, 0.2);
+}
+
+.badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #c0c0c0;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 12px;
+  color: #000000;
+}
+
+/* Mini texto informando o Preço anual */
+.plan .price-anual {
+  font-size: 14px;
+  text-align: left;
+  font-weight: bold;
+  font: 1em sans-serif;
+  float: left;
+  color: #a7a7a7;
+  margin-left: 10px;
+}
+
+/* Descrição dos planos */
+.plan .description {
+  font-size: 16px;
+  text-align: left;
+  color: #a7a7a7;
+}
