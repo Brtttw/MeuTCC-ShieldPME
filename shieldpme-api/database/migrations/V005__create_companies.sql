@@ -1,0 +1,16 @@
+CREATE TABLE companies (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    name VARCHAR(150) NOT NULL,
+    cnpj CHAR(14) NOT NULL UNIQUE,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    uptadet_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	ON UPDATE TIMESTAMP,
+
+    user_id INT NOT NULL,
+
+    CONSTRAINT fk_companies_user
+	FOREIGN KEY (user_id)
+	REFERENCES users(id)
+);
