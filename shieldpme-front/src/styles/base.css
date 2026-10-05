@@ -1,0 +1,25 @@
+/* Body */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background: #000000;
+  color: white;
+  overflow-x: hidden;
+  max-width: 100%;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Trechos destacados em branco dentro de textos cinza */
+.text-white {
+  color: white;
+}

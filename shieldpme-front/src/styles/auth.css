@@ -1,0 +1,133 @@
+/* Login */
+.auth-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #000;
+  z-index: 5;
+}
+
+.login-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Imagem da Esquerda do login */
+.login-left {
+  width: 50%;
+  background: rgba(37, 37, 37, 0.527);
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  border-top: 65px solid rgb(0, 0, 0);
+}
+
+/* Login Forms */
+.login-right {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.login-right .black {
+  background-color: #000000;
+  padding: 20px 80px;
+  margin: 300px 100px -330px 200px;
+  z-index: 9999;
+}
+
+.form {
+  width: 350px;
+}
+
+.form h2 {
+  margin-bottom: 30px;
+  font-size: 26px;
+}
+
+/* Login Inputs */
+.input-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 15px;
+  background: #111;
+  border: 1px solid #444;
+  color: #fff;
+  outline: none;
+  transition: 0.3s;
+}
+
+.input-group input:focus {
+  border-color: #999;
+}
+
+/* Error de quando os campos não estão preenchidos */
+.error {
+  color: #ff4d4d;
+  font-size: 12px;
+  margin-top: 5px;
+  display: none;
+}
+
+.error--visible {
+  display: block;
+}
+
+/* Botão de Entrar */
+.btn {
+  width: 100%;
+  padding: 15px;
+  margin-top: 10px;
+  border: 1px solid #fff;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* Link do login */
+.link {
+  margin-top: 15px;
+  font-size: 13px;
+  color: #aaa;
+  text-align: center;
+}
+
+.link a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Responsivo */
+@media (max-width:900px) {
+  .login-left {
+    display: none;
+  }
+  .login-right {
+    width: 100%;
+  }
+}
+
+/* Google */
+.google-login {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
