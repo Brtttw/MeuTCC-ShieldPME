@@ -6,9 +6,20 @@ spring:
     url: jdbc:sqlserver://localhost:1433;databaseName=ShieldPME;encrypt=true;trustServerCertificate=true
     username: sa
     password: ${DB_PASSWORD}
+    
+    # 1. ADICIONE O DRIVER EXPLICITAMENTE (Evita erros de inicialização em algumas versões do Spring Boot)
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
   jpa:
+    
+    # 2. ADICIONE O DIALETO DO SQL SERVER (Ajuda o Hibernate a traduzir as queries perfeitamente)
+    database-platform: org.hibernate.dialect.SQLServerDialect
     hibernate:
       ddl-auto: validate
-
+      
+    # 3. RECOMENDADO PARA DESENVOLVIMENTO: Mostra no console o SQL que o Spring está gerando
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 
