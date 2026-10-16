@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter 
 @Setter 
 @Entity 
-@Table (name = "services")
+@Table (name = "services", schema = "dbo")
 public class ServiceOffering {
 
     @Id 
