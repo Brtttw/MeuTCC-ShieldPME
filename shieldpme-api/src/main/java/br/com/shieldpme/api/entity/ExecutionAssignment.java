@@ -16,12 +16,6 @@ public class ExecutionAssignment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @Column(name = "service_execution_id", nullable = false, unique = true)
-    private ServiceExecution serviceExecution;
-
-    @Column(name = "employee_id", nullable = false, unique = true)
-    private Employee employee;
-
     @Column(name = "assigned_at", nullable = false)
     private LocalDateTime assignedAt;
 
@@ -32,4 +26,12 @@ public class ExecutionAssignment {
     private boolean isLead;
 
     //sla dnv oq coloca na cardinalidade
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_execution_id", nullable = false)
+    private ServiceExecution serviceExecution;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id", nullable = false)
+    private Employee employee;
 }

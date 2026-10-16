@@ -16,20 +16,14 @@ public class ReportSection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @Column(name = "report_id", nullable = false)
-    private Report report;
-
     @Column(name = "title", nullable = false, length = 200)
     private String title;
 
     @Column(name = "content", columnDefinition = "nvarchar(max)")
     private String content;
 
-    @Column(name = section_order, nullable = false, columnDefinition = "INT")
+    @Column(name = "section_order", nullable = false, columnDefinition = "INT")
     private Integer sectionOrder;
-
-    @Column(name = "description", length = 255)
-    private String description;
 
     @Column(name = "created_at", insertable = false, updatable = false, nullable = false)
     private LocalDateTime createdAt;
@@ -38,4 +32,8 @@ public class ReportSection {
     private LocalDateTime updatedAt;
 
     //slaslaslaslas
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "report_id", nullable = false)
+    private Report report;
 }

@@ -16,12 +16,6 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @Column(name = "service_execution_id", nullable = false)
-    private ServiceExecution serviceExecution;
-    
-    @Column(name = "responsible_employee_id")
-    private Employee responsibleEmployee;
-
     @Column(name = "title", nullable = false, length = 200)
     private String title;
 
@@ -30,6 +24,9 @@ public class Report {
 
     @Column(name = "file_path", length = 500)
     private String filePath;
+
+    @Column(name = "status", nullable = false, length = 20)
+    private String status;
 
     @Column(name = "generated_at")
     private LocalDateTime generatedAt;
@@ -44,4 +41,15 @@ public class Report {
     private LocalDateTime updatedAt;
 
     //desisti de fazer sas prr de manytokeni
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_execution_id", nullable = false)
+    private ServiceExecution serviceExecution;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "responsible_employee_id")
+    private Employee responsibleEmployee;
 }
+
+
+

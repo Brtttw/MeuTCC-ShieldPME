@@ -1,6 +1,7 @@
 package br.com.shieldpme.api.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
@@ -17,22 +18,8 @@ public class ContractService {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    /*
-    @Column(name = "contract_id", nullable = false)
-    private Contract contract;
-    
-    @Column(name = "service_id", nullable = false)
-    private ServiceOffering service;
-    
-    @Column(name = "site_id", nullable = false)
-    private Site site;
-    
-    @Column(name = "frequency_id", nullable = false)
-    private ServiceFrequency frequency;
-    */
-
-    @Column(name = "duration_intervals", nullable = false, columnDefinition = "SMALLINT")
-    private Integer durationIntervals;
+    @Column(name = "duration_intervals", nullable = false)
+    private Short durationIntervals;
 
     @Column(name = "unit_price", nullable = false, precision = 10, scale = 2)
     private BigDecimal unitPrice;
@@ -44,10 +31,10 @@ public class ContractService {
     private BigDecimal totalPrice;
 
     @Column(name = "start_date", nullable = false)
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date", nullable = false)
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     @Column(name = "created_at", insertable = false, updatable = false, nullable = false)
     private LocalDateTime createdAt;
@@ -73,12 +60,6 @@ public class ContractService {
 
 
 }
-
-
-
-
-
-
 
 
 

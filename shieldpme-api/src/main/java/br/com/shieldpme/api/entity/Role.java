@@ -17,7 +17,7 @@ public class Role {
     @Column(name = "name", nullable = false, unique = true, length = 35)
     private String name;
     
-    @Column(name = "description", nullable = false, length = 255)
+    @Column(name = "description", length = 255)
     private String description;
 }
 

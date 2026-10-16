@@ -1,5 +1,6 @@
 package br.com.shieldpme.api.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
@@ -16,22 +17,19 @@ public class ServiceExecution {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @Column(name = "contract_service_id", nullable = false)
-    private ContractService contractService;
-
-    @Column(name = "execution_number", nullable = false, columnDefinition = "SMALLINT", unique = true)
-    private Integer executionNumber;
+    @Column(name = "execution_number", nullable = false)
+    private Short executionNumber;
 
     @Column(name = "due_date", nullable = false)
-    private LocalDateTime dueDate;
+    private LocalDate dueDate;
 
     @Column(name = "release_date", nullable = false)
-    private LocalDateTime releaseDate;
+    private LocalDate releaseDate;
 
-    @Column(name = "started_at", nullable = false)
+    @Column(name = "started_at")
     private LocalDateTime startedAt;
 
-    @Column(name = "completed_at", nullable = false)
+    @Column(name = "completed_at")
     private LocalDateTime completedAt;
 
     @Column(name = "status", nullable = false, length = 20)
@@ -46,10 +44,10 @@ public class ServiceExecution {
     @Column(name = "updated_at", insertable = false, updatable = false, nullable = false)
     private LocalDateTime updatedAt;
 
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "contract_service_id", nullable = false)
-    //private ContractService contractService;
-    //sla
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contract_service_id", nullable = false)
+    private ContractService contractService;
+    
 }
 
 
