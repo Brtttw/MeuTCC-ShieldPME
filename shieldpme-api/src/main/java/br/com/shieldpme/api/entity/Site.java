@@ -14,19 +14,28 @@ public class Site {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @Column(name = "name", nullable = false, length = 100)
+    @Column(name = "name", length = 100)
     private String name;
     
-    @Column(name = "description", length = 255)
-    private String description;
+    @Column(name = "url", nullable = false, length = 255, unique = true)
+    private String url;
 
-    @Column(name = "created_at", insertable = false, updatable = false)
+    @Column(name = "backend_stack", length = 255)
+    private String backendStack;
+
+    @Column(name = "database_stack", length = 255)
+    private String databaseStack;
+
+    @Column(name = "repository_url", length = 255)
+    private String repositoryUrl;
+
+    @Column(name = "created_at", insertable = false, updatable = false, nullable = false)
     private java.time.LocalDateTime createdAt;
     
-    @Column(name = "updated_at", insertable = false, updatable = false)
+    @Column(name = "updated_at", insertable = false, updatable = false, nullable = false)
     private java.time.LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "company_id", nullable = false)
+    private Company company;
 }
