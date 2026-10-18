@@ -903,19 +903,6 @@ WHERE r.name = 'EMPLOYEE';
 -- 04. OWNER
 -- ============================================================
 
-/*
-    Usuário administrativo inicial do sistema.
-
-    IMPORTANTE:
-    O valor de password_hash abaixo deve ser um hash BCrypt
-    gerado pela aplicação/Spring Security.
-
-    Não devemos armazenar uma senha em texto puro no banco.
-
-    O hash abaixo é apenas um valor de desenvolvimento.
-    Substitua-o pelo hash que você gerar para o usuário owner.
-*/
-
 INSERT INTO dbo.users (
     email,
     password_hash,
