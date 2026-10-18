@@ -1,5 +1,6 @@
 package br.com.shieldpme.api.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +16,5 @@ public interface SiteRepository extends JpaRepository<Site, Integer> {
 
     Optional<Site> findByUrl(String url);
 
-    java.util.List<Site> findByCompanyId(Integer companyId);
+    List<Site> findByCompanyId(Integer companyId);
 }
