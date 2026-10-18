@@ -18,6 +18,6 @@ public interface EmployeeRepository
 
     List<Employee> findByPhone(String phone);
 
-    List<Employee> findByIsActive(boolean isActive);
+    List<Employee> findByActive(boolean active);
 
 }
