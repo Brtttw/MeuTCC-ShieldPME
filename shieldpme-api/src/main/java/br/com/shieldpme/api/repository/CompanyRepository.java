@@ -1,5 +1,6 @@
 package br.com.shieldpme.api.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,9 @@ public interface CompanyRepository
     Optional<Company> findByName(String name);
 
     Optional<Company> findById(Integer id);
+
+    Optional<Company> findByCnpj(String cnpj);
+
+    List<Company> findByUserId(Integer userId);
+
 }
