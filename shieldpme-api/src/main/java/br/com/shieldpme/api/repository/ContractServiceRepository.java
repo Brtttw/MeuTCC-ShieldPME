@@ -17,5 +17,5 @@ public interface ContractServiceRepository
     
     List<ContractService> findBySiteId(Integer siteId);
 
-    List<ContractService> findByfrequencyId(Integer frequencyId);
+    List<ContractService> findByFrequencyId(Integer frequencyId);
 }

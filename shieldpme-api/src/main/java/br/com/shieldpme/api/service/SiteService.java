@@ -1,59 +1,76 @@
-
 package br.com.shieldpme.api.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
-import br.com.shieldpme.api.entity.Company;
 import br.com.shieldpme.api.entity.Site;
 import br.com.shieldpme.api.repository.CompanyRepository;
 import br.com.shieldpme.api.repository.SiteRepository;
+import java.util.List;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class SiteService {
+    private final SiteRepository sites;
+    private final CompanyRepository companies;
 
-    private final SiteRepository siteRepository;
-    private final CompanyRepository companyRepository;
-
-    public SiteService(
-            SiteRepository siteRepository,
-            CompanyRepository companyRepository) {
-        this.siteRepository = siteRepository;
-        this.companyRepository = companyRepository;
+    public SiteService(SiteRepository sites, CompanyRepository companies) {
+        this.sites = sites;
+        this.companies = companies;
     }
 
+    @Transactional(readOnly = true)
+    public List<Site> findAll() {
+        return sites.findAll();
+    }
+
+    @Transactional(readOnly = true)
     public Site findById(Integer id) {
-        return siteRepository.findById(id)
-                .orElseThrow(() ->
-                        new IllegalArgumentException(
-                                "Site não encontrado com o ID: " + id));
+        return sites
+                .findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Site não encontrado: " + id));
     }
 
-    public List<Site> findByCompanyId(Integer companyId) {
-        companyRepository.findById(companyId)
-                .orElseThrow(() ->
-                        new IllegalArgumentException(
-                                "Empresa não encontrada com o ID: " + companyId));
-
-        return siteRepository.findByCompanyId(companyId);
-    }
-
-    public Site createSite(Site site, Integer companyId) {
-
-        if (siteRepository.findByUrl(site.getUrl()).isPresent()) {
-            throw new IllegalArgumentException(
-                    "Já existe um site cadastrado com esta URL.");
+    @Transactional(readOnly = true)
+    public List<Site> findByCompanyId(Integer id) {
+        if (!companies.existsById(id)) {
+            throw new IllegalArgumentException("Empresa não encontrada: " + id);
         }
+        return sites.findByCompanyId(id);
+    }
 
-        Company company = companyRepository.findById(companyId)
-                .orElseThrow(() ->
-                        new IllegalArgumentException(
-                                "Empresa não encontrada com o ID: " + companyId));
+    public Site create(Site s, Integer companyId) {
+        s.setId(null);
+        if (sites.findByUrl(s.getUrl()).isPresent()) {
+            throw new IllegalArgumentException("URL já cadastrada.");
+        }
+        s.setCompany(
+                companies
+                        .findById(companyId)
+                        .orElseThrow(
+                                () ->
+                                        new IllegalArgumentException(
+                                                "Empresa não encontrada: " + companyId)));
+        return sites.save(s);
+    }
 
-        site.setCompany(company);
+    public Site update(Integer id, Site in) {
+        Site s = findById(id);
+        if (in.getName() != null) {
+            s.setName(in.getName());
+        }
+        if (in.getUrl() != null && !in.getUrl().equals(s.getUrl())) {
+            if (sites.findByUrl(in.getUrl()).isPresent()) {
+                throw new IllegalArgumentException("URL já cadastrada.");
+            }
+            s.setUrl(in.getUrl());
+        }
+        s.setBackendStack(in.getBackendStack());
+        s.setDatabaseStack(in.getDatabaseStack());
+        s.setRepositoryUrl(in.getRepositoryUrl());
+        return sites.save(s);
+    }
 
-        return siteRepository.save(site);
+    public void delete(Integer id) {
+        sites.delete(findById(id));
     }
 }
-

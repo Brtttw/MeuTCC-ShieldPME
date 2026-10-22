@@ -1,48 +1,64 @@
 package br.com.shieldpme.api.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
+import br.com.shieldpme.api.entity.Role;
 import br.com.shieldpme.api.entity.User;
-import br.com.shieldpme.api.repository.CompanyRepository;
 import br.com.shieldpme.api.repository.RoleRepository;
 import br.com.shieldpme.api.repository.UserRepository;
+import java.util.List;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Service 
+@Service
+@Transactional
 public class UserService {
+    private final UserRepository users;
+    private final RoleRepository roles;
 
-    private final UserRepository userRepository;
-    private final CompanyRepository companyRepository;
-    private final RoleRepository roleRepository;
-
-    public UserService(
-	    UserRepository userRepository,
-	    CompanyRepository companyRepository, 
-	    RoleRepository roleRepository) {
-        this.userRepository = userRepository;
-	this.companyRepository = companyRepository;
-	this.roleRepository = roleRepository;
+    public UserService(UserRepository users, RoleRepository roles) {
+        this.users = users;
+        this.roles = roles;
     }
 
-    
+    @Transactional(readOnly = true)
+    public List<User> findAll() {
+        return users.findAll();
+    }
 
+    @Transactional(readOnly = true)
     public User findById(Integer id) {
-	return userRepository.findById(id)
-	    .orElseThrow(() -> 
-		new IllegalArgumentException("Usuário não encontrado com o ID " + id));
+        return users
+                .findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado: " + id));
     }
 
-    public List<User> findByCompanyId(Integer companyId) {
-	return userRepository.findByCompanyId(companyId);
+    public User create(User u, Integer roleId) {
+        u.setId(null);
+        if (users.findByEmail(u.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("E-mail já cadastrado.");
+        }
+        Role role = roles
+                .findById(roleId)
+                .orElseThrow(
+                        () -> new IllegalArgumentException("Perfil não encontrado: " + roleId));
+        u.setRole(role);
+        return users.save(u);
     }
 
-    public User createUser(User user) {
-	if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-	    throw new IllegalArgumentException(
-		"Usuário já existente com o email " + user.getEmail());
-	}
+    public User update(Integer id, User in) {
+        User u = findById(id);
+        if (in.getEmail() != null && !in.getEmail().equals(u.getEmail())) {
+            if (users.findByEmail(in.getEmail()).isPresent()) {
+                throw new IllegalArgumentException("E-mail já cadastrado.");
+            }
+            u.setEmail(in.getEmail());
+        }
+        if (in.getPhone() != null) {
+            u.setPhone(in.getPhone());
+        }
+        return users.save(u);
+    }
 
-	return userRepository.save(user);
+    public void delete(Integer id) {
+        users.delete(findById(id));
     }
 }

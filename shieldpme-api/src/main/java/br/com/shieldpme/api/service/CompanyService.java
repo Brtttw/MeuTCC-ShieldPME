@@ -1,58 +1,72 @@
 package br.com.shieldpme.api.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import br.com.shieldpme.api.entity.Company;
 import br.com.shieldpme.api.entity.User;
 import br.com.shieldpme.api.repository.CompanyRepository;
 import br.com.shieldpme.api.repository.UserRepository;
+import java.util.List;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Service 
+@Service
+@Transactional
 public class CompanyService {
+    private final CompanyRepository companies;
+    private final UserRepository users;
 
-    private final CompanyRepository companyRepository;
-    private final UserRepository userRepository;
-
-    public CompanyService(
-	    CompanyRepository companyRepository,
-	    UserRepository userRepository) {
-        this.userRepository = userRepository;
-        this.companyRepository = companyRepository;
+    public CompanyService(CompanyRepository companies, UserRepository users) {
+        this.companies = companies;
+        this.users = users;
     }
 
+    @Transactional(readOnly = true)
+    public List<Company> findAll() {
+        return companies.findAll();
+    }
+
+    @Transactional(readOnly = true)
     public Company findById(Integer id) {
-	return companyRepository.findById(id)
-	    .orElseThrow(() -> 
-		new IllegalArgumentException("Empresa não encontrada com o ID " + id));
+        return companies
+                .findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Empresa não encontrada: " + id));
     }
 
-    public List<Company> findByUserId(Integer userId) {
-	userRepository.findById(userId)
-	    .orElseThrow(() -> 
-		new IllegalArgumentException("Usuário não encontrado com o ID " + userId));
-
-	return companyRepository.findByUserId(userId);
+    @Transactional(readOnly = true)
+    public List<Company> findByUserId(Integer id) {
+        if (!users.existsById(id)) {
+            throw new IllegalArgumentException("Usuário não encontrado: " + id);
+        }
+        return companies.findByUserId(id);
     }
 
-    public Company createCompany(Company company, Integer userId) {
-	if (companyRepository.findByName(company.getName()).isPresent()) {
-	    throw new IllegalArgumentException(
-		"Empresa já existente com o nome " + company.getName());
-	}
+    public Company create(Company c, Integer userId) {
+        c.setId(null);
+        if (c.getCnpj() != null && companies.findByCnpj(c.getCnpj()).isPresent()) {
+            throw new IllegalArgumentException("CNPJ já cadastrado.");
+        }
+        User u = users
+                .findById(userId)
+                .orElseThrow(
+                        () -> new IllegalArgumentException("Usuário não encontrado: " + userId));
+        c.setUser(u);
+        return companies.save(c);
+    }
 
-	if (companyRepository.findByCnpj(company.getCnpj()).isPresent()) {
-	    throw new IllegalArgumentException(
-		"Empresa já existente com o CNPJ " + company.getCnpj());
-	}
+    public Company update(Integer id, Company in) {
+        Company c = findById(id);
+        if (in.getName() != null) {
+            c.setName(in.getName());
+        }
+        if (in.getCnpj() != null && !in.getCnpj().equals(c.getCnpj())) {
+            if (companies.findByCnpj(in.getCnpj()).isPresent()) {
+                throw new IllegalArgumentException("CNPJ já cadastrado.");
+            }
+            c.setCnpj(in.getCnpj());
+        }
+        return companies.save(c);
+    }
 
-	User user = userRepository.findById(userId)
-	    .orElseThrow(() -> 
-		new IllegalArgumentException("Usuário não encontrado com o ID " + userId));
-
-	company.setUser(user);
-
-	return companyRepository.save(company);
+    public void delete(Integer id) {
+        companies.delete(findById(id));
     }
 }
