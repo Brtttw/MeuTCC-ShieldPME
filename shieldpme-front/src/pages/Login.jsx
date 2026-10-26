@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import GoogleLoginButton from '../components/forms/GoogleLoginButton';
-import { login, loginComGoogle } from '../services/authService';
+import { ROTA_POR_PAPEL, useAuth } from '../context/AuthContext';
+import { loginComGoogle } from '../services/authService';
 
 const CAMPOS_VAZIOS = { email: '', senha: '' };
 
 export default function Login() {
   const navigate = useNavigate();
+  const { entrar } = useAuth();
   const [campos, setCampos] = useState(CAMPOS_VAZIOS);
   const [erros, setErros] = useState({});
+  const [erroGeral, setErroGeral] = useState('');
+  const [enviando, setEnviando] = useState(false);
 
   function alterar(e) {
     setCampos((atual) => ({ ...atual, [e.target.name]: e.target.value }));
@@ -16,6 +20,7 @@ export default function Login() {
 
   async function enviar(e) {
     e.preventDefault();
+    setErroGeral('');
 
     const novosErros = {
       email: campos.email.trim() === '',
@@ -24,25 +29,22 @@ export default function Login() {
     setErros(novosErros);
     if (novosErros.email || novosErros.senha) return;
 
+    setEnviando(true);
     try {
-      await login({ email: campos.email.trim(), senha: campos.senha });
-      alert('Login realizado!');
-      setCampos(CAMPOS_VAZIOS);
-      navigate('/');
+      const usuario = await entrar({ email: campos.email.trim(), senha: campos.senha });
+      navigate(ROTA_POR_PAPEL[usuario.role] ?? '/');
     } catch (erro) {
-      alert(erro.message);
+      setErroGeral(erro.message);
+    } finally {
+      setEnviando(false);
     }
   }
 
   async function aoEntrarComGoogle(resposta) {
     try {
-      const usuario = await loginComGoogle(resposta.credential);
-      alert('Bem-vindo ' + usuario.nome);
-      console.log('Email:', usuario.email);
-      console.log('Foto:', usuario.foto);
-      navigate('/');
+      await loginComGoogle(resposta.credential);
     } catch (erro) {
-      alert(erro.message);
+      setErroGeral(erro.message);
     }
   }
 
@@ -58,9 +60,10 @@ export default function Login() {
 
       <div className="input-group">
         <input
-          type="text"
+          type="email"
           name="email"
-          placeholder="Email ou usuário"
+          placeholder="Email"
+          autoComplete="username"
           value={campos.email}
           onChange={alterar}
         />
@@ -72,14 +75,21 @@ export default function Login() {
           type="password"
           name="senha"
           placeholder="Senha"
+          autoComplete="current-password"
           value={campos.senha}
           onChange={alterar}
         />
         <div className={`error${erros.senha ? ' error--visible' : ''}`}>Preencha este campo</div>
       </div>
 
-      <button type="submit" className="btn">
-        Entrar
+      {erroGeral && (
+        <p className="form-mensagem form-mensagem--erro" role="alert">
+          {erroGeral}
+        </p>
+      )}
+
+      <button type="submit" className="btn" disabled={enviando}>
+        {enviando ? 'Entrando...' : 'Entrar'}
       </button>
 
       <p className="link">

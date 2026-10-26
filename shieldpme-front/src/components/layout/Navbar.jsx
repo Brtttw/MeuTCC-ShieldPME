@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { ROTA_POR_PAPEL, useAuth } from '../../context/AuthContext';
+import NotificacoesSino from './NotificacoesSino';
 
 const LINKS = [
   { rotulo: 'Início', secao: 'home' },
@@ -12,6 +14,7 @@ const ROLAGEM_PARA_ENCOLHER_PX = 20;
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const { usuario, sair } = useAuth();
   const [encolhida, setEncolhida] = useState(false);
 
   useEffect(() => {
@@ -19,6 +22,14 @@ export default function Navbar() {
     window.addEventListener('scroll', aoRolar);
     return () => window.removeEventListener('scroll', aoRolar);
   }, []);
+
+  function aoSair(e) {
+    e.preventDefault();
+    sair();
+    navigate('/');
+  }
+
+  const rotaDaArea = usuario ? ROTA_POR_PAPEL[usuario.role] : null;
 
   return (
     <nav className={encolhida ? 'scrolled' : ''}>
@@ -30,11 +41,28 @@ export default function Navbar() {
             <Link to={`/#${secao}`}>{rotulo}</Link>
           </li>
         ))}
-        <li>
-          <button type="button" onClick={() => navigate('/login')}>
-            Login
-          </button>
-        </li>
+
+        {usuario ? (
+          <>
+            {usuario.role === 'EMPLOYEE' && <NotificacoesSino />}
+            {rotaDaArea && (
+              <li>
+                <Link to={rotaDaArea}>Minha área</Link>
+              </li>
+            )}
+            <li>
+              <a href="/" className="nav-sair" onClick={aoSair}>
+                Sair
+              </a>
+            </li>
+          </>
+        ) : (
+          <li>
+            <button type="button" onClick={() => navigate('/login')}>
+              Login
+            </button>
+          </li>
+        )}
       </ul>
     </nav>
   );

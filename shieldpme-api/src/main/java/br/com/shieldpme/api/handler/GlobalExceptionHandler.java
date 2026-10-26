@@ -14,6 +14,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import br.com.shieldpme.api.dto.ApiErrorResponse;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
+import br.com.shieldpme.api.exception.AccessForbiddenException;
+import br.com.shieldpme.api.exception.AuthenticationFailedException;
 import br.com.shieldpme.api.exception.BusinessRuleException;
 import br.com.shieldpme.api.exception.InvalidOperationException;
 import br.com.shieldpme.api.exception.ResourceConflictException;
@@ -21,6 +25,26 @@ import br.com.shieldpme.api.exception.ResourceNotFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler(AuthenticationFailedException.class)
+    public ResponseEntity<ApiErrorResponse> unauthorized(AuthenticationFailedException ex, HttpServletRequest req) {
+        return error(HttpStatus.UNAUTHORIZED, ex.getMessage(), req, Map.of());
+    }
+
+    @ExceptionHandler(AccessForbiddenException.class)
+    public ResponseEntity<ApiErrorResponse> forbidden(AccessForbiddenException ex, HttpServletRequest req) {
+        return error(HttpStatus.FORBIDDEN, ex.getMessage(), req, Map.of());
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ApiErrorResponse> tooLarge(MaxUploadSizeExceededException ex, HttpServletRequest req) {
+        return error(HttpStatus.PAYLOAD_TOO_LARGE, "O arquivo excede o tamanho máximo permitido.", req, Map.of());
+    }
+
+    @ExceptionHandler(MissingServletRequestPartException.class)
+    public ResponseEntity<ApiErrorResponse> missingPart(MissingServletRequestPartException ex, HttpServletRequest req) {
+        return error(HttpStatus.BAD_REQUEST, "Nenhum arquivo foi enviado.", req, Map.of());
+    }
+
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiErrorResponse> notFound(ResourceNotFoundException ex, HttpServletRequest req) {
         return error(HttpStatus.NOT_FOUND, ex.getMessage(), req, Map.of());

@@ -15,6 +15,9 @@ import MinhaConta from './pages/MinhaConta';
 import Blog from './pages/Blog';
 import Ferramentas from './pages/Ferramentas';
 import Checkout from './pages/Checkout';
+import AreaCliente from './pages/AreaCliente';
+import AreaFuncionario from './pages/AreaFuncionario';
+import RotaProtegida from './components/shared/RotaProtegida';
 import { privacidade, termos } from './data/paginasLegais';
 
 const CLASSE_DO_SITE = {
@@ -64,6 +67,22 @@ export default function App() {
         <Route path="/termos" element={<PaginaLegal conteudo={termos} />} />
         <Route path="/contato" element={<Contato />} />
         <Route path="/minha-conta" element={<MinhaConta />} />
+        <Route
+          path="/area-cliente"
+          element={
+            <RotaProtegida papel="CLIENT">
+              <AreaCliente />
+            </RotaProtegida>
+          }
+        />
+        <Route
+          path="/area-funcionario"
+          element={
+            <RotaProtegida papel="EMPLOYEE">
+              <AreaFuncionario />
+            </RotaProtegida>
+          }
+        />
         <Route path="/blog" element={<Blog />} />
         <Route path="/ferramentas" element={<Ferramentas />} />
         <Route path="/checkout/:plano" element={<Checkout />} />
