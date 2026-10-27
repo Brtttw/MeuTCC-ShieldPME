@@ -49,13 +49,14 @@ public class ServiceRequestService {
     private final ServiceFrequencyRepository frequencies;
     private final NotificationService notifications;
     private final StaffAccessService access;
+    private final ServiceAvailability availability;
 
     public ServiceRequestService(ContractRepository contracts, ContractServiceRepository contractServices,
                                  ServiceExecutionRepository executions, ReportRepository reports,
                                  ExecutionAssaignmentRepository assignments, CompanyRepository companies,
                                  SiteRepository sites, ServiceOfferingRepository offerings,
                                  ServiceFrequencyRepository frequencies, NotificationService notifications,
-                                 StaffAccessService access) {
+                                 StaffAccessService access, ServiceAvailability availability) {
         this.contracts = contracts;
         this.contractServices = contractServices;
         this.executions = executions;
@@ -67,6 +68,7 @@ public class ServiceRequestService {
         this.frequencies = frequencies;
         this.notifications = notifications;
         this.access = access;
+        this.availability = availability;
     }
 
     // ------------------------------------------------------------------ catalogo
@@ -75,7 +77,8 @@ public class ServiceRequestService {
     public Catalog catalog() {
         List<CatalogService> services = offerings.findAll().stream()
                 .filter(ServiceOffering::isActive)
-                .map(o -> new CatalogService(o.getId(), o.getName(), o.getDescription(), o.getBasePrice()))
+                .map(o -> new CatalogService(o.getId(), o.getName(), o.getDescription(), o.getBasePrice(),
+                        availability.isRequestable(o.getName())))
                 .toList();
         List<CatalogFrequency> freqs = frequencies.findAll().stream()
                 .map(f -> new CatalogFrequency(f.getId(), f.getName())).toList();
@@ -112,6 +115,10 @@ public class ServiceRequestService {
         for (ServiceItemRequest item : req.services()) {
             ServiceOffering offering = offerings.findById(item.serviceId()).filter(ServiceOffering::isActive)
                     .orElseThrow(() -> new BusinessRuleException("Serviço indisponível: " + item.serviceId()));
+            // Regra de negocio no backend: so servicos habilitados podem ser pedidos (a UI sozinha nao basta).
+            // Qualquer item indisponivel invalida a solicitacao inteira (a transacao e desfeita).
+            if (!availability.isRequestable(offering.getName()))
+                throw new BusinessRuleException("O serviço \"" + offering.getName() + "\" não está disponível para solicitação no momento.");
             ServiceFrequency frequency = frequencies.findById(item.frequencyId())
                     .orElseThrow(() -> new BusinessRuleException("Frequência inválida: " + item.frequencyId()));
             int n = item.durationIntervals();

@@ -14,7 +14,8 @@ import Contato from './pages/Contato';
 import MinhaConta from './pages/MinhaConta';
 import Blog from './pages/Blog';
 import Ferramentas from './pages/Ferramentas';
-import Checkout from './pages/Checkout';
+import Educacao from './pages/Educacao';
+import ArtigoEducacao from './pages/ArtigoEducacao';
 import AreaCliente from './pages/AreaCliente';
 import AreaFuncionario from './pages/AreaFuncionario';
 import RotaProtegida from './components/shared/RotaProtegida';
@@ -85,7 +86,8 @@ export default function App() {
         />
         <Route path="/blog" element={<Blog />} />
         <Route path="/ferramentas" element={<Ferramentas />} />
-        <Route path="/checkout/:plano" element={<Checkout />} />
+        <Route path="/educacao" element={<Educacao />} />
+        <Route path="/educacao/:slug" element={<ArtigoEducacao />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

@@ -4,10 +4,10 @@ import { ROTA_POR_PAPEL, useAuth } from '../../context/AuthContext';
 import NotificacoesSino from './NotificacoesSino';
 
 const LINKS = [
-  { rotulo: 'Início', secao: 'home' },
-  { rotulo: 'Sobre', secao: 'about' },
-  { rotulo: 'Serviços', secao: 'services' },
-  { rotulo: 'Planos', secao: 'pricing' },
+  { rotulo: 'Início', para: '/#home' },
+  { rotulo: 'Sobre', para: '/#about' },
+  { rotulo: 'Serviços', para: '/#services' },
+  { rotulo: 'Educação', para: '/educacao' },
 ];
 
 const ROLAGEM_PARA_ENCOLHER_PX = 20;
@@ -36,9 +36,9 @@ export default function Navbar() {
       <div className="logo">ShieldPME</div>
 
       <ul>
-        {LINKS.map(({ rotulo, secao }) => (
-          <li key={secao}>
-            <Link to={`/#${secao}`}>{rotulo}</Link>
+        {LINKS.map(({ rotulo, para }) => (
+          <li key={para}>
+            <Link to={para}>{rotulo}</Link>
           </li>
         ))}
 

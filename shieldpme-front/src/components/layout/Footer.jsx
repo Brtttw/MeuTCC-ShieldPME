@@ -8,7 +8,6 @@ const COLUNAS = [
     links: [
       { rotulo: 'Sobre', para: '/#about' },
       { rotulo: 'Serviços', para: '/#services' },
-      { rotulo: 'Planos', para: '/#pricing' },
     ],
   },
   {
@@ -22,6 +21,7 @@ const COLUNAS = [
     titulo: 'EXPLORAR',
     links: [
       { rotulo: 'Blog', para: '/blog' },
+      { rotulo: 'Educação em Cibersegurança', para: '/educacao' },
       { rotulo: 'Ferramentas', para: '/ferramentas' },
     ],
   },

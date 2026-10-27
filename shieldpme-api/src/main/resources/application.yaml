@@ -31,6 +31,9 @@ app:
     # Obrigatorio: minimo de 32 caracteres. Gere com: openssl rand -base64 48
     secret: ${JWT_SECRET}
     expiration-minutes: ${JWT_EXPIRATION_MINUTES:480}
+  # Servicos que o cliente pode solicitar hoje (nomes de service_offerings.name, separados por virgula).
+  # Os demais aparecem no catalogo como "Em breve" e sao recusados pela API.
+  requestable-services: ${REQUESTABLE_SERVICES:OWASP ZAP}
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
   storage:

@@ -9,12 +9,18 @@ export default function CatalogoServicos({ catalogo, aoSolicitar }) {
   return (
     <div className="area-grid">
       {catalogo.dados.services.map((servico) => (
-        <div className="area-card" key={servico.id}>
+        <div className={`area-card${servico.available ? '' : ' area-card--indisponivel'}`} key={servico.id}>
+          {!servico.available && <span className="area-selo-breve">Em breve</span>}
           <h3>{servico.name}</h3>
           <p>{servico.description}</p>
           <p className="area-card__preco">A partir de {moeda.format(servico.basePrice)}</p>
-          <button type="button" className="mini-btn" onClick={() => aoSolicitar(servico.id)}>
-            Solicitar este serviço
+          <button
+            type="button"
+            className="mini-btn"
+            disabled={!servico.available}
+            onClick={() => servico.available && aoSolicitar(servico.id)}
+          >
+            {servico.available ? 'Solicitar este serviço' : 'Indisponível no momento'}
           </button>
         </div>
       ))}

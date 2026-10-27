@@ -57,7 +57,7 @@ public final class RequestDtos {
                                    Integer requestId, String serviceName, Short executionNumber, String siteUrl) {}
 
     // ---------- catalogo ----------
-    public record CatalogService(Integer id, String name, String description, BigDecimal basePrice) {}
+    public record CatalogService(Integer id, String name, String description, BigDecimal basePrice, boolean available) {}
 
     public record CatalogFrequency(Integer id, String name) {}
 

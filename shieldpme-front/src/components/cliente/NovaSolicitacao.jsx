@@ -12,7 +12,11 @@ export default function NovaSolicitacao({ catalogo, servicoInicial, aoCriar }) {
 
   const frequencias = catalogo.dados?.frequencies ?? [];
 
+  const disponivel = (servicoId) =>
+    Boolean(catalogo.dados?.services.find((s) => s.id === servicoId)?.available);
+
   function alternar(servicoId) {
+    if (!disponivel(servicoId)) return;
     setSelecionados((atual) => {
       if (atual[servicoId]) {
         const { [servicoId]: _removido, ...resto } = atual;
@@ -24,7 +28,7 @@ export default function NovaSolicitacao({ catalogo, servicoInicial, aoCriar }) {
 
   // Serviço escolhido na aba "Serviços"
   useEffect(() => {
-    if (servicoInicial && frequencias.length) {
+    if (servicoInicial && frequencias.length && disponivel(servicoInicial)) {
       setSelecionados((atual) =>
         atual[servicoInicial]
           ? atual
@@ -87,9 +91,19 @@ export default function NovaSolicitacao({ catalogo, servicoInicial, aoCriar }) {
       {catalogo.dados.services.map((servico) => {
         const item = selecionados[servico.id];
         return (
-          <div className={`area-opcao${item ? ' area-opcao--ativa' : ''}`} key={servico.id}>
+          <div
+            className={`area-opcao${item ? ' area-opcao--ativa' : ''}${servico.available ? '' : ' area-opcao--indisponivel'}`}
+            key={servico.id}
+          >
             <label>
-              <input type="checkbox" checked={Boolean(item)} onChange={() => alternar(servico.id)} /> {servico.name}
+              <input
+                type="checkbox"
+                checked={Boolean(item)}
+                disabled={!servico.available}
+                onChange={() => alternar(servico.id)}
+              />{' '}
+              {servico.name}
+              {!servico.available && <span className="area-selo-breve">Em breve</span>}
             </label>
             {item && (
               <div className="area-opcao__config">
