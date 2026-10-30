@@ -1,4 +1,3 @@
-// Textos de exibição dos status devolvidos pela API
 export const ROTULO_STATUS = {
   PENDING: 'Pendente',
   RUNNING: 'Em atendimento',

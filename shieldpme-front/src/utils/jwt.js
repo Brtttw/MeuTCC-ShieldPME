@@ -1,4 +1,4 @@
-// Decodifica o payload de um JWT (só para leitura no front; a validação é feita no backend)
+// decodifica payload pra leitura
 export function decodificarJwt(token) {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');

@@ -1,6 +1,6 @@
-// Baixa o PDF autenticado (fetch com Bearer) e o abre numa aba ou salva no computador
+// baixa pdf autenticado e salva
 export async function abrirPdf(buscarBlob, nomeArquivo, { baixar = false } = {}) {
-  // A aba é aberta já no clique para não ser bloqueada pelo navegador
+  // aba abre no clique para não ser bloqueada 
   const aba = baixar ? null : window.open('about:blank', '_blank');
   try {
     const blob = await buscarBlob();

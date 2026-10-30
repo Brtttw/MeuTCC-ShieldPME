@@ -1,6 +1,5 @@
 let promessa = null;
 
-// Carrega o script do Google Sign-In uma única vez
 export function carregarScriptGoogle() {
   if (window.google?.accounts?.id) return Promise.resolve();
 

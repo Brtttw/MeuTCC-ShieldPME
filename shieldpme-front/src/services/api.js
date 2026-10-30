@@ -10,20 +10,21 @@ export const tokenStorage = {
   limpar: () => localStorage.removeItem(CHAVE_TOKEN),
 };
 
-// Junta os erros de validação do backend (campo -> mensagem) numa frase só
 function mensagemDeErro(erro, status) {
   const campos = erro?.validationErrors ? Object.values(erro.validationErrors).join(' ') : '';
   return campos || erro?.mensagem || erro?.message || erro?.detail || `Erro ${status}`;
 }
 
-// Cliente HTTP único: envia JSON (ou FormData), anexa o JWT e converte erros em Error(mensagem)
 async function requisitar(caminho, { metodo = 'GET', corpo, formData, blob = false } = {}) {
   const token = tokenStorage.obter();
   const headers = {};
+
   if (token) headers.Authorization = `Bearer ${token}`;
+
   if (corpo !== undefined) headers['Content-Type'] = 'application/json';
 
   let resposta;
+
   try {
     resposta = await fetch(`${API_URL}${caminho}`, {
       method: metodo,
@@ -31,11 +32,13 @@ async function requisitar(caminho, { metodo = 'GET', corpo, formData, blob = fal
       body: formData ?? (corpo !== undefined ? JSON.stringify(corpo) : undefined),
     });
   } catch {
+	
     throw new Error('Não foi possível se comunicar com o servidor. Verifique sua conexão e tente novamente.');
+
   }
 
   if (resposta.status === 401 && token) {
-    // Token vencido/inválido: encerra a sessão local
+
     tokenStorage.limpar();
     window.dispatchEvent(new Event(EVENTO_SESSAO_EXPIRADA));
   }
