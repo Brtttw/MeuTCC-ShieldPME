@@ -14,4 +14,6 @@ public interface ExecutionAssaignmentRepository
     List<ExecutionAssignment> findByServiceExecutionId(Integer serviceExecutionId);
 
     List<ExecutionAssignment> findByEmployeeId(Integer employeeId);
+
+    boolean existsByServiceExecutionIdAndEmployeeId(Integer serviceExecutionId, Integer employeeId);
 }

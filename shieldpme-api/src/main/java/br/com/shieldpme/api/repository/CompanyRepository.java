@@ -21,4 +21,6 @@ public interface CompanyRepository
 
     List<Company> findByUserId(Integer userId);
 
+    boolean existsByCnpj(String cnpj);
+
 }

@@ -19,5 +19,7 @@ public interface ServiceExecutionRepository
     );
 
     List<ServiceExecution> findByStatus(String status);
+
+    List<ServiceExecution> findByContractServiceContractIdOrderByContractServiceIdAscExecutionNumberAsc(Integer contractId);
 }
 

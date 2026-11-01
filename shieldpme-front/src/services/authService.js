@@ -1,31 +1,33 @@
 import { api, tokenStorage } from './api';
-import { USE_MOCK } from '../config/env';
-import { decodificarJwt } from '../utils/jwt';
 
-// POST /api/auth/login   { email, senha }      -> { token, usuario: { nome, email, foto } }
+// POST /api/auth/login   { email, password } -> { token, expiresInSeconds, user: { id, email, role, companyName } }
 export async function login({ email, senha }) {
-  if (USE_MOCK) return null;
-
-  const { token, usuario } = await api.post('/auth/login', { email, senha });
+  const { token, user } = await api.post('/auth/login', { email, password: senha });
   tokenStorage.salvar(token);
-  return usuario;
+  return user;
 }
 
-// POST /api/auth/cadastro   { nome, email, senha }
-export async function cadastrar({ nome, email, senha }) {
-  if (USE_MOCK) return null;
-
-  return api.post('/auth/cadastro', { nome, email, senha });
+// POST /api/auth/register   -> 201. O backend cria SEMPRE uma conta de cliente (o papel não é enviado).
+export async function cadastrar({ empresa, cnpj, email, telefone, senha }) {
+  return api.post('/auth/register', {
+    companyName: empresa,
+    cnpj,
+    email,
+    phone: telefone || '',
+    password: senha,
+  });
 }
 
-// POST /api/auth/google   { credential }   (o backend valida o ID token do Google)
-export async function loginComGoogle(credential) {
-  if (USE_MOCK) {
-    const dados = decodificarJwt(credential);
-    return { nome: dados.name, email: dados.email, foto: dados.picture };
-  }
+// GET /api/auth/me
+export function obterSessao() {
+  return api.get('/auth/me');
+}
 
-  const { token, usuario } = await api.post('/auth/google', { credential });
-  tokenStorage.salvar(token);
-  return usuario;
+export function sair() {
+  tokenStorage.limpar();
+}
+
+// O backend ainda não tem endpoint de login com Google (fora do escopo desta versão).
+export async function loginComGoogle() {
+  throw new Error('O login com Google ainda não está disponível. Use e-mail e senha.');
 }

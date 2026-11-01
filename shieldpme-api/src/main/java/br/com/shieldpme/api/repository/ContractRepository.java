@@ -14,4 +14,10 @@ public interface ContractRepository
     List<Contract> findByCompanyId(Integer companyId);
 
     List<Contract> findByStatus(String status);
+
+    /** Solicitacoes do cliente dono da empresa (isolamento por usuario). */
+    List<Contract> findByCompanyUserIdOrderByCreatedAtDesc(Integer userId);
+
+    /** Fila dos funcionarios: as solicitacoes mais recentes. */
+    List<Contract> findTop50ByOrderByCreatedAtDesc();
 }

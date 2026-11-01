@@ -3,23 +3,40 @@ spring:
     name: shieldpme-api
 
   datasource:
-    url: jdbc:sqlserver://localhost:1433;databaseName=ShieldPME;encrypt=true;trustServerCertificate=true
-    username: sa
+    url: ${DB_URL:jdbc:sqlserver://localhost:1433;databaseName=ShieldPME;encrypt=true;trustServerCertificate=true}
+    username: ${DB_USERNAME:sa}
     password: ${DB_PASSWORD}
-    
-    # 1. ADICIONE O DRIVER EXPLICITAMENTE (Evita erros de inicialização em algumas versões do Spring Boot)
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
   jpa:
-    
-    # 2. ADICIONE O DIALETO DO SQL SERVER (Ajuda o Hibernate a traduzir as queries perfeitamente)
     database-platform: org.hibernate.dialect.SQLServerDialect
     hibernate:
       ddl-auto: validate
-      
-    # 3. RECOMENDADO PARA DESENVOLVIMENTO: Mostra no console o SQL que o Spring está gerando
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
+    show-sql: false
 
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 11MB
+
+server:
+  error:
+    include-message: never
+    include-stacktrace: never
+    include-binding-errors: never
+
+# Configuracoes sensiveis vem SEMPRE de variaveis de ambiente (nunca versionar valores reais).
+app:
+  jwt:
+    # Obrigatorio: minimo de 32 caracteres. Gere com: openssl rand -base64 48
+    secret: ${JWT_SECRET}
+    expiration-minutes: ${JWT_EXPIRATION_MINUTES:480}
+  # Servicos que o cliente pode solicitar hoje (nomes de service_offerings.name, separados por virgula).
+  # Os demais aparecem no catalogo como "Em breve" e sao recusados pela API.
+  requestable-services: ${REQUESTABLE_SERVICES:OWASP ZAP}
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
+  storage:
+    # Diretorio PRIVADO (fora de qualquer pasta servida). Nao e exposto como recurso estatico.
+    reports-dir: ${REPORTS_DIR:./storage/reports}
+    max-report-bytes: 10485760
